@@ -1,0 +1,91 @@
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+<script src="/__/firebase/5.2.0/firebase-database.js"></script>
+
+
+
+
+<div class="jumbotron">
+  <h1>Mr Smiths Math Quiz</h1>
+
+    <div class="margin2" *ngIf="!start">
+      <input class="input" [(ngModel)]="name" (keyup.enter)="setName()" placeholder=" Enter name">
+    </div>
+
+    <div class="container" *ngIf="!finished">
+      <div *ngIf="!start">
+        <button type="btn" class="margin btn-success" (click)="setDifficulty('basic')"> Basic </button>
+        <button type="btn" class="margin btn-warning" (click)="setDifficulty('advanced')"> Advanced </button>
+
+        <p>You have 2 minutes to answer 20 questions starting from when you choose a difficulty.</p>
+        <p>Basic will give you numbers between 0 and 10 with the signs + and -</p>
+        <p>Advanced will give numbers between 0 and 20 with signs + - * /</p>
+
+            <div class="alert alert-danger" *ngIf="error">
+              {{errMsg}}
+            </div>
+
+      </div>
+   </div>
+</div>
+
+<div class="margin2" *ngIf="!finished">
+  <div class="question">
+    Question {{counter}}: {{question}}
+
+
+    <p>{{count}}</p>
+  </div>
+  <input class="col-lg-4" [(ngModel)]="userAnswer" (keyup.enter)="checkAnswer()" placeholder="Answer">
+</div>
+
+<div class="margin2" *ngIf="finished">
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Score</th>
+        <th>Time left</th>
+        <th>Total Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let x of list">
+        <td>1</td>
+        <td>{{x.name}}</td>
+        <td>{{x.score}}</td>
+        <td>{{x.timeLeft}}</td>
+        <td>{{x.total}}</td>
+        <!-- <td>{{totalPoints}}</td> -->
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Question Number</th>
+        <th>Question</th>
+        <th>Correct Answer</th>
+        <th>User Answer</th>
+        <th>Correct</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let q of questionList">
+        <td>{{q.questionNum}}</td>
+        <td>{{q.question}}</td>
+        <td>{{q.answer}}</td>
+        <td>{{q.userAnswer}}</td>
+        <td>{{q.correct}}</td>
+      </tr>
+    </tbody>
+  </table>
